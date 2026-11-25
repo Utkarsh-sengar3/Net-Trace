@@ -20,6 +20,7 @@ import { NodeInspectorDrawer } from '@/components/network/NodeInspectorDrawer';
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { DisclaimerBadge } from '@/components/layout/DisclaimerBadge';
 import { api } from '@/lib/api';
+import { fallbackData } from '@/lib/fallbackData';
 import { NodeItem, EdgeItem, ShortestPathResponse } from '@/lib/types';
 import { COMMUNITY_COLORS } from '@/lib/constants';
 
@@ -53,10 +54,19 @@ function ExplorerContent() {
         max_nodes: 350,
         max_edges: 1200,
       });
-      setNodes(res.nodes);
-      setEdges(res.edges);
+      if (res && res.nodes && res.nodes.length > 0) {
+        setNodes(res.nodes);
+        setEdges(res.edges);
+      } else {
+        const fb = fallbackData.getGraphView(selectedCommunity);
+        setNodes(fb.nodes);
+        setEdges(fb.edges);
+      }
     } catch (err) {
-      console.error('Failed to load graph view:', err);
+      console.warn('Failed to load graph view, falling back to local dataset:', err);
+      const fb = fallbackData.getGraphView(selectedCommunity);
+      setNodes(fb.nodes);
+      setEdges(fb.edges);
     } finally {
       setLoading(false);
     }

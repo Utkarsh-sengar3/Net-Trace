@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import cytoscape, { Core, EventObject } from 'cytoscape';
 import { NodeItem, EdgeItem } from '@/lib/types';
 import { COMMUNITY_COLORS } from '@/lib/constants';
-import { ZoomIn, ZoomOut, Maximize2, RefreshCw, Layers, Sliders, Eye } from 'lucide-react';
+import { ZoomIn, ZoomOut, Maximize2, RefreshCw, Layers, Sliders, Eye, Network } from 'lucide-react';
 
 interface CytoscapeGraphProps {
   nodes: NodeItem[];
@@ -160,17 +160,29 @@ export const CytoscapeGraph: React.FC<CytoscapeGraphProps> = ({
       layout: {
         name: currentLayout,
         animate: false,
-        randomize: false,
+        randomize: true,
         nodeRepulsion: () => 450000,
         idealEdgeLength: () => 100,
         edgeElasticity: () => 100,
         gravity: 80,
-        numIter: 250,
+        numIter: 300,
       } as any,
       minZoom: 0.1,
       maxZoom: 4.0,
       wheelSensitivity: 0.25,
     });
+
+    cy.on('layoutstop', () => {
+      cy.fit(undefined, 30);
+    });
+
+    // Resize once container dimensions settle
+    setTimeout(() => {
+      if (cyRef.current) {
+        cyRef.current.resize();
+        cyRef.current.fit(undefined, 30);
+      }
+    }, 150);
 
     cy.on('tap', 'node', (evt: EventObject) => {
       const node = evt.target;
@@ -291,6 +303,14 @@ export const CytoscapeGraph: React.FC<CytoscapeGraphProps> = ({
           Bridge Node
         </span>
       </div>
+
+      {/* Empty State Fallback */}
+      {nodes.length === 0 && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-500 font-mono text-xs gap-2 z-10 pointer-events-none">
+          <Network className="w-8 h-8 text-cyan-500/50 animate-pulse" />
+          <span>No network nodes active for selected criteria</span>
+        </div>
+      )}
 
       {/* Canvas */}
       <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing" />

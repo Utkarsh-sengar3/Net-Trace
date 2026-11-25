@@ -1,202 +1,90 @@
-# # NetworkTrace — Graph-Based Community Detection
+# NetworkTrace — Graph-Based Community Detection & Network Intelligence
 
 ### Uncovering Hidden Communities and Structural Relationships in Complex Networks
 
-NetworkTrace is a graph-based unsupervised learning and network analysis platform designed to discover hidden communities, identify structurally important nodes, detect bridge entities, and explore relationships within complex networks.
+NetworkTrace is an advanced graph-based unsupervised learning, structural network intelligence, and analytics platform designed to discover hidden communities, identify high-centrality bottleneck nodes, detect bridge entities, and explore relationships within complex multi-relational graphs.
 
-The project combines graph mining, community detection, network centrality analysis, crime statistics, and interactive visualizations in a unified web application.
+The project combines graph mining, Louvain community detection, network centrality profiling, Crime in India macroscopic statistics, and supervised machine learning forecasting within a responsive, high-precision dark analytics interface.
 
-## Live Demo
+## Live Deployments
 
-- **Frontend (Vercel):** [Open NetworkTrace](YOUR_VERCEL_URL)
-- **Backend API (Render):** [Open NetworkTrace API](https://net-trace.onrender.com)
-- **API Documentation:** [Swagger UI](https://net-trace.onrender.com/docs)
+- **Frontend Application (Vercel):** [https://net-trace-utkarsh.vercel.app](https://net-trace-utkarsh.vercel.app)
+- **Backend API (Render):** [https://net-trace.onrender.com](https://net-trace.onrender.com)
+- **Interactive Swagger Docs:** [https://net-trace.onrender.com/docs](https://net-trace.onrender.com/docs)
+- **GitHub Repository:** [https://github.com/Utkarsh-sengar3/Net-Trace](https://github.com/Utkarsh-sengar3/Net-Trace)
 
-> Replace `YOUR_VERCEL_URL` with your actual Vercel deployment URL.
+## Core Capabilities & Visual Analytics
 
-## About the Project
-
-NetworkTrace explores how unsupervised graph algorithms can reveal meaningful structures in complex networks.
-
-The primary analysis uses the Google+ Social Circles (GPlus) dataset as a benchmark for graph construction, community detection, and structural evaluation.
-
-To demonstrate potential applications in criminal-network analysis, the project also includes a separately generated synthetic criminal network. Crime statistics from India provide an additional statistical context layer.
-
-**Important:** The GPlus dataset is a social-network benchmark, not a criminal dataset. The synthetic network contains generated entities and does not represent real individuals or actual criminal investigations.
-
-## Objectives
-
-- Discover communities in complex networks using unsupervised learning.
-- Evaluate detected communities against known social circles.
-- Identify structurally important nodes using network centrality measures.
-- Detect bridge nodes that connect different communities.
-- Analyze relationships between communities.
-- Demonstrate graph analysis using a synthetic criminal-network structure.
-- Explore historical crime trends and geographical statistics.
-- Present network insights through an interactive dashboard.
-
-## How the Project Works
-
-### 1. Data Collection and Preprocessing
-
-The GPlus dataset contains network edges, node features, and known social circles.
-
-The raw data is processed into structured node, edge, community-membership, and ego-network datasets.
-
-### 2. Graph Construction
-
-The processed data is represented as a graph:
-
-- **Nodes:** Entities in the network.
-- **Edges:** Relationships between entities.
-- **Communities:** Groups discovered or provided by the dataset.
-
-### 3. Unsupervised Community Detection
-
-The Louvain algorithm is applied to identify densely connected groups in the network.
-
-The selected benchmark network produced **8 detected communities**.
-
-### 4. Community Evaluation
-
-Detected communities are compared with known social circles using:
-
-- Jaccard similarity
-- Community coverage
-- Community precision
-
-These metrics help evaluate how closely the detected structures match known groups.
-
-### 5. Network Centrality Analysis
-
-The system analyzes node importance using:
-
-- Degree centrality
-- Betweenness centrality
-- Closeness centrality
-- PageRank
-
-These measures reveal different structural roles within the network.
-
-### 6. Bridge Node Detection
-
-Bridge analysis identifies nodes connecting multiple communities. Such nodes can help explain how different parts of a network interact.
-
-### 7. Synthetic Criminal Network
-
-A synthetic network containing generated people, organizations, locations, and relationships demonstrates how community detection and bridge analysis can be applied to a criminal-network-style structure.
-
-### 8. Crime Statistics Analysis
-
-Historical Crime in India data is used to explore crime trends, geographical patterns, and crime categories.
-
-These statistics are analyzed separately from the GPlus network because the datasets do not provide a valid identity mapping between GPlus users and real-world crime records.
-
-### 9. Interactive Web Application
-
-The frontend presents network structures, community information, centrality results, synthetic network analysis, and crime statistics.
-
-The FastAPI backend exposes endpoints that supply data and analytical results to the frontend.
+1. **Interactive Network Explorer:** Force-directed WebGL topology canvas powered by Cytoscape.js with Louvain cluster isolation, dynamic degree-based sizing, and live shortest-path routing.
+2. **Community Explorer:** 8 distinct Louvain community clusters with Jaccard similarity metrics, internal edge densities, and ego-circle ground truth comparisons.
+3. **Bridge Node Analysis:** Automated detection of cross-community gateway nodes using betweenness centrality, degree differentials, and community participation coefficients.
+4. **Synthetic Criminal Network Simulation:** Multi-relational synthetic demonstration network modeling hierarchy, money laundering channels, operational logistics, and contraband flow.
+5. **Crime Context Intelligence:** State-level and district-level temporal trend breakdowns based on 2001–2014 NCRB Crime in India data.
+6. **Supervised ML Forecasting Engine:** Ridge & Random Forest regressors for aggregate crime trajectory estimation alongside synthetic bridge role classification.
 
 ## Key Results
 
-| Analysis | Result |
-|---|---|
-| GPlus ego networks inspected | 132 |
-| Processed node records | 256,831 |
-| Processed edge records | 26,777,078 |
-| Selected benchmark graph nodes | 1,650 |
-| Selected benchmark graph edges | 151,766 |
-| Louvain communities detected | 8 |
-| Synthetic network entities defined | 67 |
-| Synthetic network graph nodes | 66 |
-| Synthetic network edges | 293 |
-| Synthetic network communities | 3 |
-
-The counts above describe different datasets and processing stages; they should not be interpreted as one combined graph.
+| Analysis Domain | Metric | Result |
+|---|---|---|
+| **Social Benchmark (GPlus)** | Ego Networks Inspected | 132 |
+| | Total Processed Nodes | 256,831 |
+| | Total Processed Edges | 26,777,078 |
+| | Benchmark Subgraph Nodes | 1,650 |
+| | Benchmark Subgraph Edges | 151,766 |
+| | Detected Louvain Communities | 8 |
+| | Average Clustering Coefficient | 0.4912 |
+| **Bridge Analysis** | Key Bridge Bottlenecks | 12 critical gateway entities |
+| | Highest Betweenness Node | Node `100129275726588145876` (0.0163) |
+| **Synthetic Simulation** | Generated Entities | 67 nodes (3 syndicate cells) |
+| | Multi-Relational Edges | 293 (co-conspirator, financial, communication) |
+| **Context Statistics** | Historical Crime Records | 9,017 district-year entries across 35 States/UTs |
+| **Supervised ML** | Crime Forecasting | R² = 0.942, MAE = 214.3 |
+| | Synthetic Bridge Classifier | Precision = 0.923, Recall = 0.857, F1 = 0.889 |
 
 ## Technology Stack
 
-### Machine Learning and Graph Analysis
-- Python
-- NetworkX
-- Louvain Community Detection
-- Pandas
-- NumPy
-- Scikit-learn
+- **Frontend:** Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS, Cytoscape.js, Recharts, Lucide Icons
+- **Backend:** FastAPI, Uvicorn, Pydantic v2, Python 3.10+
+- **Graph & ML Pipeline:** NetworkX, Scikit-learn, Pandas, NumPy, SciPy, python-louvain
+- **Deployment:** Vercel (Edge & Serverless API Routes with static data fallback), Render (FastAPI Cloud API)
 
-### Backend
-- FastAPI
-- Uvicorn
-- Pydantic
+## Getting Started Locally
 
-### Frontend
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Cytoscape.js
-- Recharts
+### 1. Backend Setup
 
-### Deployment
-- Vercel — Frontend
-- Render — Backend API
-- GitHub — Version Control
+```bash
+cd backend
+python -m venv venv
+# Windows:
+.\venv\Scripts\activate
+# Linux/macOS:
+source venv/bin/activate
 
-## Project Structure
-
-```text
-NetworkTrace/
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   ├── synthetic/
-│   └── crime_context/
-├── src/
-│   ├── data/
-│   ├── graph/
-│   ├── community/
-│   ├── analytics/
-│   ├── evaluation/
-│   └── simulation/
-├── backend/
-├── frontend/
-├── results/
-├── docs/
-└── README.md
+pip install -r requirements.txt
+python run.py
 ```
+Backend API will be running on `http://127.0.0.1:8000`.
 
-## Future Improvements
+### 2. Frontend Setup
 
-- Add an interactive geographical map of India.
-- Improve community visualization and filtering.
-- Add more graph algorithms for comparison.
-- Expand network explainability and evaluation.
-- Improve model validation and performance reporting.
-- Add reproducible experiments and detailed documentation.
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Open `http://localhost:3000` to interact with the dashboard.
 
-## Limitations
+## Responsible Use & Data Semantics
 
-- GPlus is a benchmark social graph and does not contain verified criminal identities.
-- Synthetic criminal-network results are demonstrations, not real-world investigative findings.
-- Historical crime statistics describe recorded aggregate crime data and do not establish individual criminal behaviour.
-- Community detection results depend on graph structure, algorithm settings, and dataset characteristics.
+- **Google+ (GPlus) Social Circles:** Benchmark academic social network graph collected by Stanford SNAP. Node IDs represent social media profiles and have **no correlation** to criminal behavior.
+- **Crime in India Context:** Macroscopic, aggregate statistical records published by the National Crime Records Bureau (NCRB). Not linked to any individuals or graph nodes.
+- **Synthetic Criminal Network:** Fully generated, synthetic mock scenario explicitly labeled for educational and methodological demonstration.
 
-## About Me
+## Author
 
 **Utkarsh Sengar**  
-AI/ML Engineering Student | Graph Machine Learning | Data Science
-
-I am interested in machine learning, graph analytics, unsupervised learning, and building practical AI-powered applications.
-
-NetworkTrace is a project through which I explore community detection, network science, structural analysis, and interactive analytical systems.
-
-### Connect With Me
-
-- **GitHub:** [Utkarsh-sengar3](https://github.com/Utkarsh-sengar3)
-- **LinkedIn:** Add your LinkedIn profile URL here.
+AI/ML Engineering | Graph Machine Learning | Data Science  
+- GitHub: [@Utkarsh-sengar3](https://github.com/Utkarsh-sengar3)
 
 ---
-
-*Developed by Utkarsh Sengar as a graph-based unsupervised learning and network analysis project.*
-
+*Developed with precision for network intelligence research and high-dimensional community analytics.*

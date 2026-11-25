@@ -1,29 +1,39 @@
-# Node.js
-node_modules/
-frontend/node_modules/
-frontend/.next/
-frontend/out/
-
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*$py.class
 venv/
 .venv/
+env/
 
-# Environment variables and secrets
+# Large raw benchmark dumps (Stanford SNAP raw files exceed GitHub 100MB limit)
+data/raw/
+
+# Node / Next.js
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+out/
+frontend/out/
+build/
+dist/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.env*.local
 .env
-.env.*
-!.env.example
+.vercel
+*.tsbuildinfo
+next-env.d.ts.bak
+*.zip
+report/
+NETWORKTRACE_LEARNING/
 
-# IDE and operating system
+# IDE and OS files
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
-
-# Large generated datasets
-data/processed/
-data/raw/
-
-# Logs
-*.log
