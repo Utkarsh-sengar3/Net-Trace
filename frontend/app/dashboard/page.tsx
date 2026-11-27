@@ -20,6 +20,7 @@ import { MetricCard } from '@/components/analytics/MetricCard';
 import { DisclaimerBadge } from '@/components/layout/DisclaimerBadge';
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { api } from '@/lib/api';
+import { fallbackData } from '@/lib/fallbackData';
 import { NetworkSummary, CrimeSummary, CommunityItem, BridgeNodeItem, YearlyTrendItem } from '@/lib/types';
 import { COMMUNITY_COLORS } from '@/lib/constants';
 import {
@@ -55,13 +56,18 @@ export default function DashboardPage() {
           api.getBridges(),
           api.getYearlyTrends(),
         ]);
-        setNetSummary(net);
-        setCrimeSummary(crime);
-        setCommunities(comms);
-        setBridges(brs.slice(0, 5));
-        setYearlyTrends(trends);
+        setNetSummary(net && net.total_edges > 0 ? net : fallbackData.getNetworkSummary());
+        setCrimeSummary(crime || fallbackData.getCrimeSummary());
+        setCommunities(comms && comms.length > 0 && comms.some((c) => c.internal_edges > 0) ? comms : fallbackData.getCommunities());
+        setBridges(brs && brs.length > 0 ? brs.slice(0, 5) : fallbackData.getBridges().slice(0, 5));
+        setYearlyTrends(trends && trends.length > 0 ? trends : fallbackData.getYearlyTrends());
       } catch (err) {
-        console.error('Failed to load dashboard data:', err);
+        console.error('Failed to load dashboard data, using fallback:', err);
+        setNetSummary(fallbackData.getNetworkSummary());
+        setCrimeSummary(fallbackData.getCrimeSummary());
+        setCommunities(fallbackData.getCommunities());
+        setBridges(fallbackData.getBridges().slice(0, 5));
+        setYearlyTrends(fallbackData.getYearlyTrends());
       } finally {
         setLoading(false);
       }

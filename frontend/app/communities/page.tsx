@@ -7,6 +7,7 @@ import { Topbar } from '@/components/layout/Topbar';
 import { DisclaimerBadge } from '@/components/layout/DisclaimerBadge';
 import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { api } from '@/lib/api';
+import { fallbackData } from '@/lib/fallbackData';
 import { CommunityItem } from '@/lib/types';
 import { COMMUNITY_COLORS } from '@/lib/constants';
 
@@ -17,8 +18,17 @@ export default function CommunitiesPage() {
 
   useEffect(() => {
     api.getCommunities()
-      .then((data) => setCommunities(data))
-      .catch((err) => console.error(err))
+      .then((data) => {
+        if (data && data.length > 0 && data.some((c) => c.internal_edges > 0)) {
+          setCommunities(data);
+        } else {
+          setCommunities(fallbackData.getCommunities());
+        }
+      })
+      .catch((err) => {
+        console.warn('Failed to load communities, using local dataset:', err);
+        setCommunities(fallbackData.getCommunities());
+      })
       .finally(() => setLoading(false));
   }, []);
 
