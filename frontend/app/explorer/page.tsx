@@ -7,7 +7,6 @@ import {
   Filter,
   Users2,
   GitBranch,
-  Route,
   Search,
   Sparkles,
   Info,
@@ -21,7 +20,7 @@ import { CommandSearchModal } from '@/components/layout/CommandSearchModal';
 import { DisclaimerBadge } from '@/components/layout/DisclaimerBadge';
 import { api } from '@/lib/api';
 import { fallbackData } from '@/lib/fallbackData';
-import { NodeItem, EdgeItem, ShortestPathResponse } from '@/lib/types';
+import { NodeItem, EdgeItem } from '@/lib/types';
 import { COMMUNITY_COLORS } from '@/lib/constants';
 
 function ExplorerContent() {
@@ -35,12 +34,6 @@ function ExplorerContent() {
   const [bridgeOnly, setBridgeOnly] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-
-  // Shortest Path state
-  const [sourceNode, setSourceNode] = useState<string>('');
-  const [targetNode, setTargetNode] = useState<string>('');
-  const [pathResult, setPathResult] = useState<ShortestPathResponse | null>(null);
-  const [pathLoading, setPathLoading] = useState<boolean>(false);
 
   useEffect(() => {
     loadGraphData();
@@ -69,28 +62,6 @@ function ExplorerContent() {
       setEdges(fb.edges);
     } finally {
       setLoading(false);
-    }
-  }
-
-  async function handleFindShortestPath() {
-    if (!sourceNode.trim() || !targetNode.trim()) return;
-    setPathLoading(true);
-    try {
-      const res = await api.getShortestPath(sourceNode.trim(), targetNode.trim());
-      setPathResult(res);
-      if (res.found && res.nodes.length > 0) {
-        // Merge path nodes into view if missing
-        const existingNodeIds = new Set(nodes.map((n) => n.node_id));
-        const newNodes = res.nodes.filter((n) => !existingNodeIds.has(n.node_id));
-        if (newNodes.length > 0) {
-          setNodes((prev) => [...prev, ...newNodes]);
-        }
-        setEdges((prev) => [...prev, ...res.edges]);
-      }
-    } catch (err) {
-      console.error('Shortest path error:', err);
-    } finally {
-      setPathLoading(false);
     }
   }
 
@@ -171,46 +142,6 @@ function ExplorerContent() {
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-cyan-400' : ''}`} />
             </button>
           </div>
-        </div>
-
-        {/* Shortest Path Tracing Tool Bar */}
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3 flex-1 min-w-[300px]">
-            <Route className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-            <span className="text-xs font-mono text-slate-400 uppercase font-semibold">Shortest Path Analyzer:</span>
-            <input
-              type="text"
-              placeholder="Source Node ID (e.g. 1001292...)"
-              value={sourceNode}
-              onChange={(e) => setSourceNode(e.target.value)}
-              className="px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50 flex-1"
-            />
-            <span className="text-slate-600 font-mono text-xs">→</span>
-            <input
-              type="text"
-              placeholder="Target Node ID (e.g. 1183798...)"
-              value={targetNode}
-              onChange={(e) => setTargetNode(e.target.value)}
-              className="px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50 flex-1"
-            />
-            <button
-              onClick={handleFindShortestPath}
-              disabled={pathLoading || !sourceNode || !targetNode}
-              className="px-4 py-1.5 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 text-white text-xs font-mono font-semibold rounded-lg transition-colors flex items-center gap-1.5"
-            >
-              {pathLoading ? 'Tracing...' : 'Trace Path'}
-            </button>
-          </div>
-
-          {pathResult && (
-            <div className="text-xs font-mono px-3 py-1 rounded-lg bg-slate-950 border border-slate-800 text-slate-300">
-              {pathResult.found ? (
-                <span className="text-emerald-400">Path Found: {pathResult.length} hops ({pathResult.path.length} nodes)</span>
-              ) : (
-                <span className="text-rose-400">{pathResult.message || 'No connecting path found'}</span>
-              )}
-            </div>
-          )}
         </div>
 
         {/* Main Cytoscape Canvas */}

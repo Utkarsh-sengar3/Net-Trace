@@ -8,6 +8,8 @@ env/
 
 # Large raw benchmark dumps (Stanford SNAP raw files exceed GitHub 100MB limit)
 data/raw/
+data/processed/
+Technical_Portfolio_Presentation/
 
 # Node / Next.js
 node_modules/

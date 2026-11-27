@@ -156,7 +156,7 @@ export const CytoscapeGraph: React.FC<CytoscapeGraphProps> = ({
             'opacity': 0.08,
           },
         },
-      ],
+      ] as any,
       layout: {
         name: currentLayout,
         animate: false,

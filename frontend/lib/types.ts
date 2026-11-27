@@ -91,7 +91,7 @@ export interface YearlyTrendItem {
 export interface StateCrimeItem {
   state: string;
   total_crimes: number;
-  average_crimes: float;
+  average_crimes: number;
   districts_count: number;
   years_count: number;
   rank: number;
@@ -138,6 +138,12 @@ export interface SyntheticNetworkSummary {
   relationship_breakdown: Record<string, number>;
   bridge_entities_count: number;
   disclaimer: string;
+}
+
+export interface SyntheticGraphResponse {
+  nodes: SyntheticNode[];
+  edges: SyntheticEdge[];
+  summary: SyntheticNetworkSummary;
 }
 
 export interface MLMetrics {
