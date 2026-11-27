@@ -19,6 +19,7 @@ import {
   FileCode2,
   ChevronRight,
   Activity,
+  UploadCloud,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -27,6 +28,7 @@ const NAV_ITEMS = [
   { href: '/communities', label: 'Community Explorer', icon: Users2, category: 'Graph Analytics', badge: '8' },
   { href: '/node-intelligence', label: 'Node Intelligence', icon: Cpu, category: 'Graph Analytics' },
   { href: '/bridge-analysis', label: 'Bridge Analysis', icon: GitBranch, category: 'Graph Analytics', highlight: true },
+  { href: '/custom-analysis', label: 'Custom Graph Ingestion', icon: UploadCloud, category: 'Graph Analytics', badge: 'Upload' },
   { href: '/synthetic', label: 'Synthetic Network', icon: Shield, category: 'Simulation', badge: 'Demo' },
   { href: '/crime-context', label: 'Crime Context', icon: BarChart3, category: 'Context Statistics', badge: 'IPC' },
   { href: '/ml', label: 'Supervised ML', icon: BrainCircuit, category: 'Machine Learning' },
